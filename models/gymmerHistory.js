@@ -11,4 +11,4 @@ const gymmerHistory = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('GymHistory', gymmerHistory)
+module.exports = mongoose.model('gymhistory', gymmerHistory)
