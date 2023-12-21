@@ -44,4 +44,4 @@ const gymUserSchema = new mongoose.Schema({
     
 })
 
-module.exports = mongoose.model('Gymmer', gymUserSchema)
+module.exports = mongoose.model('gymuser', gymUserSchema)
