@@ -1,5 +1,4 @@
 let express = require('express')
-let bodyParser = require('body-parser')
 let mongoose = require('mongoose')
 const routes = require('./routes/routes');
 const gymUser = require('./models/gymUser');   
@@ -66,7 +65,6 @@ routes.get('/owner/getAll', async (req, res) => {
 
 //Get by ID Method //! 3
 routes.get('/owner/search/:email', async (req, res) => {
-    console.log(req.params, 'data');
     try {
         const data = await gymOwner.findOne(req.params)
         res.json(data)
@@ -100,6 +98,64 @@ routes.delete('/owner/delete/:email', async (req, res) => {
 })
 
 //!APIs for owners------------------------------------------------------------------------------- END
+
+//!APIs for GYM HISTORY------------------------------------------------------------------------------- START
+
+routes.get('/history/getAll', async (req, res) => {
+    try {
+        const data = await gymmerHistory.find();
+        res.json(data)
+        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+routes.post('/history/post', async (req, res) => {
+    const data = new gymmerHistory({
+        name: req.body.name,
+        gymmerId: req.body.gymmerId,
+        time: new Date()
+    })
+    try {
+        const dataToSave = await data.save();
+        res.status(200).json(dataToSave)
+    }
+    catch (error) {
+        res.status(400).json({message: error.message})
+    }
+})
+
+routes.get('/history/search/:name', async (req, res) => {
+    try {
+        const data = await gymmerHistory.find({name : {$regex : ".*"+req.params.name+".*" ,$options:"i"}})
+        res.json(data)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 routes.post('/gymUser/post', async (req, res) => {
