@@ -41,6 +41,21 @@ const gymUserSchema = new mongoose.Schema({
         required: false,
         type: Boolean
     },
+
+    gymmerId:{
+        required: false,
+        type: String
+    }
+    // name: String,
+    // phone: Number,
+    // email: String,
+    // age: Number,
+    // dob: Date,
+    // gender: String,
+    // address: String,
+    // membershipStart: Date,
+    // membershipEnd: Date,
+    // isSubscribe: Boolean,
     
 })
 
