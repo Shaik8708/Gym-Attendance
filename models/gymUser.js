@@ -38,7 +38,7 @@ const gymUserSchema = new mongoose.Schema({
         type: Date
     },
     isSubscribed: {
-        required: true,
+        required: false,
         type: Boolean
     },
     
