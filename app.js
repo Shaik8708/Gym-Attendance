@@ -17,7 +17,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-mongoose.connect(mongoString)
+mongoose.connect(mongoString, { useNewUrlParser: true, useUnifiedTopology: true })
 const database = mongoose.connection
 database.on('error', (error) => {
     console.log(error)
@@ -35,7 +35,9 @@ app.get('/', (req, res) => {
 
 app.use('/api', routes)
 
-//Post Method
+
+//!APIs for owners------------------------------------------------------------------------------- START
+//Post Method //! 1
 routes.post('/owner/post', async (req, res) => {
     const data = new gymOwner({
         name: req.body.name,
@@ -51,7 +53,7 @@ routes.post('/owner/post', async (req, res) => {
     }
 })
 
-//Get all Method
+//Get all Method //! 2
 routes.get('/owner/getAll', async (req, res) => {
     try {
         const data = await gymOwner.find();
@@ -62,7 +64,7 @@ routes.get('/owner/getAll', async (req, res) => {
     }
 })
 
-//Get by ID Method
+//Get by ID Method //! 3
 routes.get('/owner/search/:email', async (req, res) => {
     try {
         const data = await gymOwner.findOne(req.params)
@@ -72,17 +74,30 @@ routes.get('/owner/search/:email', async (req, res) => {
     }
 })
 
-//Update by ID Method
-routes.put('/update/:id', (req, res) => {
-    res.send('Update by ID API')
+//Update by ID Method //! 4
+routes.put('/owner/update/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const updatedData = req.body;
+        const result = await gymOwner.findOneAndUpdate({email: email}, updatedData, {useFindAndModify: false})
+        res.send(result)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
 })
 
-//Delete by ID Method
-routes.delete('/delete/:id', (req, res) => {
-    res.send('Delete by ID API')
+//Delete by ID Method //! 5
+routes.delete('/owner/delete/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const data = await gymOwner.findOneAndDelete({email: email})
+        res.send(`Document with ${data.name} has been deleted..`)
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message })
+    }
 })
 
-//ALL USERS API'S
 
 //PostApi
 routes.post('/gymUser/post', async (req, res) => {
