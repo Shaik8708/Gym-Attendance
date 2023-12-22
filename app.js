@@ -11,9 +11,9 @@ const mongoString = process.env.DATABASE_URL
 
 let app = express();
 
-app.use(bodyParser.json())
+app.use(express.json())
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
     extended: true
 }))
 
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 app.use('/api', routes)
 
 //Post Method
-routes.post('/post', async (req, res) => {
+routes.post('/owner/post', async (req, res) => {
     const data = new gymOwner({
         name: req.body.name,
         email: req.body.email,
@@ -52,13 +52,25 @@ routes.post('/post', async (req, res) => {
 })
 
 //Get all Method
-routes.get('/getAll', (req, res) => {
-    res.send('Basan')
+routes.get('/owner/getAll', async (req, res) => {
+    try {
+        const data = await gymOwner.find();
+        res.json(data)
+        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
 })
 
 //Get by ID Method
-routes.get('/getOne/:id', (req, res) => {
-    res.send('Get by ID API')
+routes.get('/owner/search/:email', async (req, res) => {
+    console.log(req.params, 'data');
+    try {
+        const data = await gymOwner.findOne(req.params)
+        res.json(data)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
 })
 
 //Update by ID Method
@@ -69,4 +81,27 @@ routes.put('/update/:id', (req, res) => {
 //Delete by ID Method
 routes.delete('/delete/:id', (req, res) => {
     res.send('Delete by ID API')
+})
+
+
+routes.post('/gymUser/post', async (req, res) => {
+    const data = new gymUser({
+        name: req.body.name,
+        phone: req.body.phone,
+        email: req.body.email,
+        age: req.body.age,
+        dob: req.body.dob,
+        gender: req.body.gender,
+        address: req.body.address,
+        membershipStart: req.body.membershipStart,
+        membershipEnd: req.body.membershipEnd,
+        isSubscribe: req.body.isSubscribe,
+    })
+    console.log(req.body,'data');
+    try {
+        const dataToSave = await data.save()
+        res.status(200).json(dataToSave)
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
 })
