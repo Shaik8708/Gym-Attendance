@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Owner Login</title>
+    <title>Inactive Users</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
 </head>
 <body class="h-100">
     <div class="container">
-        <div class="row mt-5">
-            <h1 class="col-md-8">Owner Login</h1>
-            <form id="ownerLoginId" class="col-md-6">
-                <div class="form-group">
-                  <label for="ownerEmail">Email address</label>
-                  <input type="email" class="form-control" id="ownerEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label for="ownerPassword">Password</label>
-                  <input type="password" class="form-control" id="ownerPassword" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
+        <div class="mt-5 d-flex align-items-center justify-content-around" >
+            <div>
+                <h1>Inactive Users</h1>
+            </div>
         </div>
+        <div  class="row">
+            <div class="col-md-3">
+                <form id="searchName" >
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="searchInactive" aria-describedby="searxh" placeholder="Enter name">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary" onclick="searchName()">Search</button>
+            </div>
+        </div>
+
+        <div id="myGrid" class="ag-theme-quartz" style="height: 500px"></div>
     </div>
     
 </body>
-<script src="ownerLogin.js"></script>
+<script src="inactiveUser.js"></script>
 <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
