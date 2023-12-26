@@ -98,7 +98,6 @@ routes.delete('/owner/delete/:email', async (req, res) => {
     }
 })
 
-//API'S for GYMUSER--------
 
 //PostApi
 routes.post('/gymUser/post', async (req, res) => {
@@ -141,6 +140,17 @@ function generateUserId() {
 }
 
 
+//GetAllApi
+routes.get('/gymUser/getAll', async (req, res) => {
+    try {
+        const data = await gymUser.find();
+        res.json(data)
+
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 //get by gymmerId api
 routes.get('/gymUser/:gymmerId', async (req, res) => {
     const userId = req.params.gymmerId;
@@ -156,24 +166,13 @@ routes.get('/gymUser/:gymmerId', async (req, res) => {
 });
 
 
-//GetAllApi
-routes.get('/gymUser/getAll', async (req, res) => {
+
+//Get By NameApi
+//Get by ID Method
+routes.get('/gymUser/search/:email', async (req, res) => {
     try {
-        const data = await gymUser.find();
-        res.json(data)
-
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
-
-//Get By NameApi(searchAPI)
-
-routes.get('/gymUser/search/:name', async (req, res) => {
-    try {
-        // const data = await gymUser.find({name: req.params.name})
-        const data = await gymUser.find({name : {$regex : ".*"+req.params.name+".*" ,$options:"i"}})
-        console.log(data, req.params.name);
+        const data = await gymUser.find({email: req.params.email})
+        console.log(data, req.params.email);
         res.json(data)
     }
     catch (error) {
@@ -181,7 +180,7 @@ routes.get('/gymUser/search/:name', async (req, res) => {
     }
 })
 
-//Get by active or inactive
+//Get by daterange api
 routes.get('/gymUser', async (req, res) => {
     // localhost:3000/api/gymUser?status=inactive&name=basanagouda
     try {
