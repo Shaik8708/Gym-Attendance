@@ -179,3 +179,14 @@ routes.post('/gymUser/post', async (req, res) => {
         res.status(400).json({message: error.message})
     }
 })
+
+routes.put('/gymUser/update/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const updatedData = req.body;
+        const result = await gymUser.findOneAndUpdate({email: email}, updatedData, {useFindAndModify: false})
+        res.send(result)
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+})
