@@ -11,7 +11,7 @@ const gymmerHistory = new mongoose.Schema({
     },
     time: {
         required: true,
-        type: Date
+        type: Number
     }
 })
 

@@ -19,7 +19,7 @@ const gymUserSchema = new mongoose.Schema({
     },
     dob: {
         required: false,
-        type: Date
+        type: Number
     },
     address: {
         required: false,
@@ -31,11 +31,11 @@ const gymUserSchema = new mongoose.Schema({
     },
     membershipStart: {
         required: true,
-        type: Date
+        type: Number
     },
     membershipEnd: {
         required: true,
-        type: Date
+        type: Number
     },
     isSubscribed: {
         required: false,
@@ -46,17 +46,6 @@ const gymUserSchema = new mongoose.Schema({
         required: false,
         type: String
     }
-    // name: String,
-    // phone: Number,
-    // email: String,
-    // age: Number,
-    // dob: Date,
-    // gender: String,
-    // address: String,
-    // membershipStart: Date,
-    // membershipEnd: Date,
-    // isSubscribe: Boolean,
-    
 })
 
 module.exports = mongoose.model('gymuser', gymUserSchema)
