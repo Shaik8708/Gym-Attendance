@@ -11,6 +11,7 @@
       crossorigin="anonymous"
     />
 </head>
+
 <body class="h-100">
     <div class="container">
         <div class="row mt-5">
@@ -18,16 +19,20 @@
                 Gymmer Login
             </h1>
             
-            <form class="col-md-6">
+            <form id="gymLogin" class="col-md-6">
                 <div class="form-group">
                     <label for="gymmerId">Gymmer ID</label>
                     <input type="text" class="form-control" id="gymmerId" aria-describedby="gymmerID" placeholder="Enter Id">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
+              </form>
+            </div>
+            <div id="successMessage" style="color: green;"></div>
+            <div id="errorMessage" style="color: red;"></div>
+            
     </div>
 </body>
+<script src="gymuser.js"></script>
 <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
