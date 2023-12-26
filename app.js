@@ -1,5 +1,4 @@
 let express = require('express')
-let bodyParser = require('body-parser')
 let mongoose = require('mongoose')
 const routes = require('./routes/routes');
 const gymUser = require('./models/gymUser');
@@ -99,6 +98,47 @@ routes.delete('/owner/delete/:email', async (req, res) => {
 })
 
 
+//!APIs for owners------------------------------------------------------------------------------- END
+
+//!APIs for GYM HISTORY------------------------------------------------------------------------------- START
+
+routes.get('/history/getAll', async (req, res) => {
+    try {
+        const data = await gymmerHistory.find();
+        res.json(data)
+        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+routes.post('/history/post', async (req, res) => {
+    const data = new gymmerHistory({
+        name: req.body.name,
+        gymmerId: req.body.gymmerId,
+        time: new Date()
+    })
+    try {
+        const dataToSave = await data.save();
+        res.status(200).json(dataToSave)
+    }
+    catch (error) {
+        res.status(400).json({message: error.message})
+    }
+})
+
+routes.get('/history/search/:name', async (req, res) => {
+    try {
+        const data = await gymmerHistory.find({name : {$regex : ".*"+req.params.name+".*" ,$options:"i"}})
+        res.json(data)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+
+
+
 //PostApi
 routes.post('/gymUser/post', async (req, res) => {
     try {
@@ -185,6 +225,18 @@ routes.get('/gymUser/getAll', async (req, res) => {
     }
 })
 
+
+routes.put('/gymUser/update/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const updatedData = req.body;
+        const result = await gymUser.findOneAndUpdate({email: email}, updatedData, {useFindAndModify: false})
+        res.send(result)
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+})
+
 //Get By NameApi
 //Get by ID Method
 routes.get('/gymUser/search/:email', async (req, res) => {
@@ -231,5 +283,6 @@ routes.get('/gymUser', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 
