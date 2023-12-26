@@ -97,6 +97,7 @@ routes.delete('/owner/delete/:email', async (req, res) => {
     }
 })
 
+//API'S for GYMUSER--------
 
 //!APIs for owners------------------------------------------------------------------------------- END
 
@@ -191,30 +192,11 @@ routes.get('/gymUser/:gymmerId', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
-    // try {
 
-        // try {
-        //     const data = await gymOwner.findOne(req.params)
-        //     res.json(data)
-        // } catch (error) {
-        //     res.status(500).json({ message: error.message })
-        // }
-
-        // if (!userData) {
-        //     res.status(404).json({ message: 'User not found' });
-        //     return;
-        // }
-
-        // // Respond with the user data, including the userId
-        // res.status(200).json({ ...userData._doc, userId });
-    // } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ error: 'Internal Server Error' });
-    // }
 });
 
 
-//GetApi
+//GetAllApi
 routes.get('/gymUser/getAll', async (req, res) => {
     try {
         const data = await gymUser.find();
@@ -224,7 +206,6 @@ routes.get('/gymUser/getAll', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
-
 
 routes.put('/gymUser/update/:email', async (req, res) => {
     try {
@@ -237,12 +218,14 @@ routes.put('/gymUser/update/:email', async (req, res) => {
     }
 })
 
-//Get By NameApi
-//Get by ID Method
-routes.get('/gymUser/search/:email', async (req, res) => {
+
+//Get By NameApi(searchAPI)
+
+routes.get('/gymUser/search/:name', async (req, res) => {
     try {
-        const data = await gymUser.find({email: req.params.email})
-        console.log(data, req.params.email);
+        // const data = await gymUser.find({name: req.params.name})
+        const data = await gymUser.find({name : {$regex : ".*"+req.params.name+".*" ,$options:"i"}})
+        console.log(data, req.params.name);
         res.json(data)
     }
     catch (error) {
@@ -250,7 +233,7 @@ routes.get('/gymUser/search/:email', async (req, res) => {
     }
 })
 
-//Get by daterange api
+//Get by active or inactive
 routes.get('/gymUser', async (req, res) => {
     // localhost:3000/api/gymUser?status=inactive&name=basanagouda
     try {
