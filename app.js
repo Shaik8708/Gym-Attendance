@@ -181,8 +181,7 @@ routes.get('/gymUser/getAll', async (req, res) => {
 
 routes.get('/gymUser/search/:name', async (req, res) => {
     try {
-        const data = await gymUser.find({email: req.params.email})
-        console.log(data, req.params.email);
+        const data = await gymUser.find({name: req.params.name})
         res.json(data)
     }
     catch (error) {
