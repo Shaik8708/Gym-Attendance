@@ -1,5 +1,4 @@
 let express = require('express')
-let bodyParser = require('body-parser')
 let mongoose = require('mongoose')
 const routes = require('./routes/routes');
 const gymUser = require('./models/gymUser');
@@ -98,6 +97,7 @@ routes.delete('/owner/delete/:email', async (req, res) => {
     }
 })
 
+//API'S for GYMUSER--------
 
 //PostApi
 routes.post('/gymUser/post', async (req, res) => {
@@ -166,10 +166,20 @@ routes.get('/gymUser/:gymmerId', async (req, res) => {
 });
 
 
+//GetAllApi
+routes.get('/gymUser/getAll', async (req, res) => {
+    try {
+        const data = await gymUser.find();
+        res.json(data)
 
-//Get By NameApi
-//Get by ID Method
-routes.get('/gymUser/search/:email', async (req, res) => {
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
+//Get By NameApi(searchAPI)
+
+routes.get('/gymUser/search/:name', async (req, res) => {
     try {
         const data = await gymUser.find({email: req.params.email})
         console.log(data, req.params.email);
@@ -213,5 +223,6 @@ routes.get('/gymUser', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 

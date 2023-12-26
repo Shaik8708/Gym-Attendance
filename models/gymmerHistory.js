@@ -8,6 +8,10 @@ const gymmerHistory = new mongoose.Schema({
     gymmerId: {
         required: true,
         type: String
+    },
+    time: {
+        required: true,
+        type: Date
     }
 })
 
