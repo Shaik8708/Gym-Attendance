@@ -105,7 +105,6 @@ routes.post('/gymUser/post', async (req, res) => {
 
           // Generate a random 6-digit alphanumeric user ID
           const userId = generateUserId();
-          console.log(userId,'userId');
     const data = new gymUser({
         gymmerId:userId,
         name: req.body.name,
@@ -139,7 +138,6 @@ function generateUserId() {
     return userId;
 }
 
-
 //GetAllApi
 routes.get('/gymUser/getAll', async (req, res) => {
     try {
@@ -154,10 +152,8 @@ routes.get('/gymUser/getAll', async (req, res) => {
 //get by gymmerId api
 routes.get('/gymUser/:gymmerId', async (req, res) => {
     const userId = req.params.gymmerId;
-    console.log(userId);
     try {
         const data = await gymUser.findOne({gymmerId: userId})
-        console.log(data);
         res.json(data)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -166,22 +162,25 @@ routes.get('/gymUser/:gymmerId', async (req, res) => {
 });
 
 
-//GetAllApi
-routes.get('/gymUser/getAll', async (req, res) => {
-    try {
-        const data = await gymUser.find();
-        res.json(data)
 
+routes.put('/gymUser/update/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const updatedData = req.body;
+        const result = await gymUser.findOneAndUpdate({email: email}, updatedData, {useFindAndModify: false})
+        res.send(result)
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(400).json({message: error.message})
     }
 })
+
 
 //Get By NameApi(searchAPI)
 
 routes.get('/gymUser/search/:name', async (req, res) => {
     try {
-        const data = await gymUser.find({name: req.params.name})
+        // const data = await gymUser.find({name: req.params.name})
+        const data = await gymUser.find({name : {$regex : ".*"+req.params.name+".*" ,$options:"i"}})
         res.json(data)
     }
     catch (error) {
@@ -211,14 +210,12 @@ routes.get('/gymUser', async (req, res) => {
         
         if (name) {
             query.name = { $regex: new RegExp(name, 'i') }; // Case-insensitive name search
-            console.log(name,'query.name');
           }
 
         // Fetch data based on the query
         const data = await gymUser.find(query);
         res.json(data);
     } catch (error) {
-        console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
