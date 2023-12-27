@@ -20,9 +20,14 @@ gymLogin.addEventListener("submit", (event) => {
         .then(data => {
             if (data.gymmerId) {
                 // console.log(data, 'data');
-
                 successMessageElement.textContent = 'Successfully submitted';
                 errorMessageElement.textContent = '';
+                setTimeout(() => {
+                    successMessageElement.textContent = '';
+                    errorMessageElement.textContent = '';
+                    document.getElementById('gymmerId').value = ""
+                    // cache_clear()
+                  }, 2000);
 
                 const postData = {
                     name: data.name,
@@ -58,5 +63,10 @@ gymLogin.addEventListener("submit", (event) => {
             console.error('Error:', error.message);
             successMessageElement.textContent = '';
             errorMessageElement.textContent = 'Invalid gymmerId';
+            setTimeout(() => {
+                successMessageElement.textContent = '';
+                errorMessageElement.textContent = '';
+                document.getElementById('gymmerId').value = ""
+              }, 2000);
         });
 });

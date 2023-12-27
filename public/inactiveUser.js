@@ -112,7 +112,7 @@ function searchName() {
     });
 }
 
-function editInactiveForm(rowToEdit) {
+function editForm(rowToEdit) {
   let mStart = new Date(Math.round(Number(rowToEdit.membershipStart * 1000)));
   let mEnd = new Date(Math.round(Number(rowToEdit.membershipEnd * 1000)));
   let formattedStartDate = mStart.toISOString().substring(0, 10);
