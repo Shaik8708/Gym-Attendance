@@ -2,7 +2,7 @@ let rowData;
 let columnDefs;
 let gridOptions;
 let gridApi;
-fetch("http://localhost:3000/api/history/getAll")
+fetch("http://localhost:3000/history/getAll")
   .then((response) => response.json())
   .then(async (json) => {
     data = json;
@@ -39,7 +39,7 @@ fetch("http://localhost:3000/api/history/getAll")
 
 function searchName() {
   let name = document.getElementById("nameText").value;
-  fetch("http://localhost:3000/api/history/search/" + name)
+  fetch("http://localhost:3000/history/search/" + name)
     .then((response) => response.json())
     .then((json) => {
         console.log(json);

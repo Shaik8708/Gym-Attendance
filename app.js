@@ -1,6 +1,7 @@
 let express = require("express");
 let mongoose = require("mongoose");
 let cors = require("cors");
+const path = require('path')
 const routes = require("./routes/routes");
 const gymUser = require("./models/gymUser");
 const gymmerHistory = require("./models/gymmerHistory");
@@ -33,19 +34,18 @@ database.once("connected", () => {
   console.log("Database Connected");
 });
 
-app
-  .get("/", (req, res) => {
-    res.set({
-      "Allow-access-Allow-Origin": "*",
-    });
-  })
-  .listen(3000);
-
 app.use("/api", routes);
+
+app.get('/', (req, res) => {
+    res.set({
+        "Allow-access-Allow-Origin": '*'
+    })
+    return res.redirect('index.html')
+})
 
 //!APIs for owners------------------------------------------------------------------------------- START
 //Post Method //! 1
-routes.post("/owner/post", async (req, res) => {
+app.post("/owner/post", async (req, res) => {
   const data = new gymOwner({
     name: req.body.name,
     email: req.body.email,
@@ -60,8 +60,9 @@ routes.post("/owner/post", async (req, res) => {
 });
 
 //Get all Method //! 2
-routes.get("/owner/getAll", async (req, res) => {
+app.get("/owner/getAll", async (req, res) => {
   try {
+    console.log('qwe');
     const data = await gymOwner.find();
     res.json(data);
   } catch (error) {
@@ -70,7 +71,7 @@ routes.get("/owner/getAll", async (req, res) => {
 });
 
 //Get by ID Method //! 3
-routes.get("/owner/search/:email", async (req, res) => {
+app.get("/owner/search/:email", async (req, res) => {
   try {
     const data = await gymOwner.findOne(req.params);
     res.json(data);
@@ -80,7 +81,7 @@ routes.get("/owner/search/:email", async (req, res) => {
 });
 
 //Update by ID Method //! 4
-routes.put("/owner/update/:email", async (req, res) => {
+app.put("/owner/update/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const updatedData = req.body;
@@ -96,7 +97,7 @@ routes.put("/owner/update/:email", async (req, res) => {
 });
 
 //Delete by ID Method //! 5
-routes.delete("/owner/delete/:email", async (req, res) => {
+app.delete("/owner/delete/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const data = await gymOwner.findOneAndDelete({ email: email });
@@ -112,7 +113,7 @@ routes.delete("/owner/delete/:email", async (req, res) => {
 
 //!APIs for GYM HISTORY------------------------------------------------------------------------------- START
 
-routes.get("/history/getAll", async (req, res) => {
+app.get("/history/getAll", async (req, res) => {
   try {
     const data = await gymmerHistory.find();
     res.json(data);
@@ -121,7 +122,7 @@ routes.get("/history/getAll", async (req, res) => {
   }
 });
 
-routes.post("/history/post", async (req, res) => {``
+app.post("/history/post", async (req, res) => {``
   const data = new gymmerHistory({
     name: req.body.name,
     gymmerId: req.body.gymmerId,
@@ -135,7 +136,7 @@ routes.post("/history/post", async (req, res) => {``
   }
 });
 
-routes.get("/history/search/:name", async (req, res) => {
+app.get("/history/search/:name", async (req, res) => {
   try {
     const data = await gymmerHistory.find({
       name: { $regex: ".*" + req.params.name + ".*", $options: "i" },
@@ -147,7 +148,7 @@ routes.get("/history/search/:name", async (req, res) => {
 });
 
 //PostApi
-routes.post("/gymUser/post", async (req, res) => {
+app.post("/gymUser/post", async (req, res) => {
   try {
     // Generate a random 6-digit alphanumeric user ID
     const userId = generateUserId();
@@ -185,7 +186,7 @@ function generateUserId() {
 }
 
 //GetAllApi
-routes.get("/gymUser/getAll", async (req, res) => {
+app.get("/gymUser/getAll", async (req, res) => {
   try {
     const data = await gymUser.find();
     res.json(data);
@@ -195,7 +196,7 @@ routes.get("/gymUser/getAll", async (req, res) => {
 });
 
 //get by gymmerId api
-routes.get("/gymUser/:gymmerId", async (req, res) => {
+app.get("/gymUser/:gymmerId", async (req, res) => {
   const userId = req.params.gymmerId;
   try {
     const data = await gymUser.findOne({ gymmerId: userId });
@@ -205,7 +206,7 @@ routes.get("/gymUser/:gymmerId", async (req, res) => {
   }
 });
 
-routes.put("/gymUser/update/:email", async (req, res) => {
+app.put("/gymUser/update/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const updatedData = req.body;
@@ -222,7 +223,7 @@ routes.put("/gymUser/update/:email", async (req, res) => {
 
 //Get By NameApi(searchAPI)
 
-routes.get("/gymUser/search/:name", async (req, res) => {
+app.get("/gymUser/search/:name", async (req, res) => {
   try {
     // const data = await gymUser.find({name: req.params.name})
     const data = await gymUser.find({
@@ -235,8 +236,8 @@ routes.get("/gymUser/search/:name", async (req, res) => {
 });
 
 //Get by active or inactive
-routes.get("/gymUser", async (req, res) => {
-  // localhost:3000/api/gymUser?status=inactive&name=basanagouda
+app.get("/gymUser", async (req, res) => {
+  // localhost:3000/gymUser?status=inactive&name=basanagouda
   try {
     // Get filters from query parameters
     const { startDate, endDate, status, name } = req.query;
@@ -269,3 +270,12 @@ routes.get("/gymUser", async (req, res) => {
   }
 });
 
+
+app.get('*', function(req, res){
+    res.redirect('/404.html'); // Assuming your 404 page is located in the 'public' directory
+  });
+  
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
