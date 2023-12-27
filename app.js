@@ -268,3 +268,7 @@ routes.get("/gymUser", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/404.html'));
+});
