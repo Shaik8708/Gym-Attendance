@@ -7,12 +7,13 @@ ownerLogin.addEventListener("submit", (ele) => {
   let pass = document.getElementById("ownerPassword").value;
   let data = []; 
 
-  fetch("http://localhost:3000/api/owner/search/" + email)
+  fetch("http://localhost:3000/owner/search/" + email)
     .then((response) => response.json())
     .then(async (json) => {
       data = json; 
       if(data != null || undefined){
           if(pass == data.password){
+            console.log('correct');
             window.location.href = "./ownerDashboard.html";
           }else{
             console.error("wrong password");

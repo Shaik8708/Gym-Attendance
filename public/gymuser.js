@@ -8,8 +8,8 @@ gymLogin.addEventListener("submit", (event) => {
     var gymmerIdValue = document.getElementById('gymmerId').value;
     // console.log(gymmerIdValue);
 
-    const apiUrl = `http://localhost:3000/api/gymUser/${gymmerIdValue}`;
-    const postApiUrl = 'http://localhost:3000/api/history/post';
+    const apiUrl = `http://localhost:3000/gymUser/${gymmerIdValue}`;
+    const postApiUrl = 'http://localhost:3000/history/post';
     fetch(apiUrl)
         .then(res => {
             if (!res.ok) {
