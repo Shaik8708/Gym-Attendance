@@ -6,7 +6,7 @@ gymLogin.addEventListener("submit", (event) => {
     event.preventDefault();
 
     var gymmerIdValue = document.getElementById('gymmerId').value;
-    console.log(gymmerIdValue);
+    // console.log(gymmerIdValue);
 
     const apiUrl = `http://localhost:3000/api/gymUser/${gymmerIdValue}`;
     const postApiUrl = 'http://localhost:3000/api/history/post';
@@ -19,9 +19,10 @@ gymLogin.addEventListener("submit", (event) => {
         })
         .then(data => {
             if (data.gymmerId) {
-             
+                // console.log(data, 'data');
+
                 successMessageElement.textContent = 'Successfully submitted';
-                errorMessageElement.textContent = ''; 
+                errorMessageElement.textContent = '';
 
                 const postData = {
                     name: data.name,
@@ -35,21 +36,21 @@ gymLogin.addEventListener("submit", (event) => {
                     },
                     body: JSON.stringify(postData),
                 })
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! Status: ${res.status}`);
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    console.log('API response:', data);
-              
-                })
-                .catch(error => {
-                    console.error('Error:', error.message);
-                });
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`HTTP error! Status: ${res.status}`);
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        console.log('API response:', data);
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error.message);
+                    });
             }
-       
+
 
             // Perform any further processing here
         })
