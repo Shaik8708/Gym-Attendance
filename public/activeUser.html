@@ -26,97 +26,211 @@
   <body class="h-100">
     <!-- <h1>Active Users</h1> -->
     <div class="container mt-6">
-        <div class="d-flex justify-content-center">
-          <h1 class="mt-4">Active Users</h1>
+      <div class="d-flex justify-content-center">
+        <h1 class="mt-4">Active Users</h1>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control rounded"
+              id="searchInput"
+              placeholder="Search..."
+              style="margin-right: 10px"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-primary rounded"
+                type="button"
+                onclick="performSearch()"
+              >
+                Search
+              </button>
+            </div>
+          </div>
         </div>
-      
-        <div class="row mt-3">
-          <div class="col-md-4">
-            <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control rounded"
-                id="searchInput"
-                placeholder="Search..."
-                style="margin-right: 10px;"
-              />
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-primary rounded"
-                  type="button"
-                  onclick="performSearch()"
-                >
-                  Search
-                </button>
+      </div>
+
+      <div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleAddModal"
+          style="margin-bottom: 50px; margin-top: 20px"
+        >
+          Add ActiveUser
+        </button>
+      </div>
+
+      <div
+        id="myGrid"
+        style="height: 500px; width: 100%"
+        class="ag-theme-alpine"
+      ></div>
+    </div>
+
+    <!-------- Add Modal ------->
+
+    <div
+      class="modal"
+      id="exampleAddModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleAddModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleAddModalLabel">Add Active user</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              onclick="$('#exampleAddModal').hide();"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="row">
+              <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" />
               </div>
-            </div>
+              <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="age">Age</label>
+                <input type="text" class="form-control" id="age" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="gender">Gender</label>
+                <input type="text" class="form-control" id="gender" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="m_start">Membership Start</label>
+                <input type="date" class="form-control" id="m_start" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="m_end">Membership End</label>
+                <input type="date" class="form-control" id="m_end" />
+              </div>
+            </form>
           </div>
-        </div>
-      
-        <!-- Display Search Results -->
-        <div id="searchResults"></div>
-      
-        <div
-          id="myGrid"
-          style="height: 500px; width: 100%;"
-          class="ag-theme-alpine"
-        ></div>
-      </div>
-
-      <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Update Active Users</h5>
-              <button type="button" class="close" data-bs-dismiss="modal" onclick="$('#exampleModal').hide();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body" >
-                <form class="row">
-                    <div class="form-group col-md-6">
-                      <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="email">Email</label>
-                      <input type="email" class="form-control" disabled id="email">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="phone">Phone</label>
-                      <input type="text" class="form-control" disabled id="phone">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="age">Age</label>
-                      <input type="text" class="form-control" id="age">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="address">Address</label>
-                      <input type="text" class="form-control" id="address">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="code">Code</label>
-                      <input type="text" class="form-control" disabled id="code">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="m_start">Membership Start</label>
-                      <input type="date" class="form-control" id="m_start">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="m_end">Membership End</label>
-                      <input type="date" class="form-control" id="m_end">
-                    </div>
-                  </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" onclick="$('#exampleModal').hide();" data-bs-dismiss="modal">Close</button>
-              <button type="button" onclick="updateActiveUser()" class="btn btn-primary">Update</button>
-            </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="$('#exampleAddModal').hide();"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" onclick="addActiveUser()" class="btn btn-primary">Save</button>
           </div>
         </div>
       </div>
-      
+    </div>
 
-      
-    
+    <!----------- Edit Model ---------------->
+    <div
+      class="modal"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Update Active Users
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-bs-dismiss="modal"
+              onclick="$('#exampleModal').hide();"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="row">
+              <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="editName" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" disabled id="editEmail" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" disabled id="editPhone" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="age">Age</label>
+                <input type="text" class="form-control" id="editAge" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="editAddress" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="code">Code</label>
+                <input type="text" class="form-control" disabled id="editCode" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="m_start">Membership Start</label>
+                <input type="date" class="form-control" id="editM_start" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="m_end">Membership End</label>
+                <input type="date" class="form-control" id="editM_end" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="$('#exampleModal').hide();"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              onclick="updateActiveUser()"
+              class="btn btn-primary"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <script src="updateBtn.js"></script>
   <script src="activeUser.js"></script>

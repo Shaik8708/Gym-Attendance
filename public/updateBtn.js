@@ -28,6 +28,5 @@ class UpdateCellRenderer {
       const { node } = this.params;
         $('#exampleModal').show();
         editForm(node.data);
-        console.log(node.data);
     }
   }

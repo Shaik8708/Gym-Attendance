@@ -17,7 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 headerName: 'Age', field: 'age'
             },
             {
-                headerName: 'Date of Birth', field: 'dob'
+                headerName: 'Date of Birth', field: 'dob', valueFormatter: function (params) {
+                    // Convert epoch time to a human-readable date
+                    var epochTime = params.value;
+                    var date = new Date(epochTime * 1000); // Convert seconds to milliseconds
+                    return date.toLocaleString(); // Adjust formatting as needed
+                },
             },
             {
                 headerName: 'Gender', field: 'gender'
@@ -57,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Create an AG-Grid instance with the provided options
     var grid = new agGrid.Grid(eGridDiv, gridOptions);
 
-    const apiUrl = "http://localhost:3000/api/gymUser?status=active";
+    const apiUrl = "http://localhost:3000/gymUser?status=active";
 
     // Fetch data from the API and update the AG-Grid instance
     function fetchData(url) {
@@ -73,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Search function with debounce
     window.performSearch = function () {
         var search = document.getElementById('searchInput').value.trim();
-        const searchUrl = `http://localhost:3000/api/gymUser?status=active&name=${search}`;
+        const searchUrl = `http://localhost:3000/gymUser?status=active&name=${search}`;
         fetchData(searchUrl);
     };
 
@@ -83,42 +88,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function editForm(rowToEdit) {
+    console.log(rowToEdit);
     let startDate = rowToEdit.membershipStart;
     let endDate = rowToEdit.membershipEnd;
     let mstartDate = new Date(startDate * 1000);
     let mendDate = new Date(endDate * 1000)
     let formattedStartDate = mstartDate.toISOString().split('T')[0];
     let formattedEndDate = mendDate.toISOString().split('T')[0];
-    document.getElementById('name').value = rowToEdit.name;
-    document.getElementById('email').value = rowToEdit.email;
-    document.getElementById('phone').value = rowToEdit.phone;
-    document.getElementById('age').value = rowToEdit.age;
-    document.getElementById('address').value = rowToEdit.address;
-    document.getElementById('code').value = rowToEdit.gymmerId;
-    document.getElementById('m_start').value = formattedStartDate;
-    document.getElementById('m_end').value = formattedEndDate;
+    document.getElementById('editName').value = rowToEdit.name;
+    console.log();
+    document.getElementById('editEmail').value = rowToEdit.email;
+    document.getElementById('editPhone').value = rowToEdit.phone;
+    document.getElementById('editAge').value = rowToEdit.age;
+    document.getElementById('editAddress').value = rowToEdit.address;
+    document.getElementById('editCode').value = rowToEdit.gymmerId;
+    document.getElementById('editM_start').value = formattedStartDate;
+    document.getElementById('editM_end').value = formattedEndDate;
 }
 
 function updateActiveUser() {
-    let name = document.getElementById('name').value;
-    let email = document.getElementById("email").value;
-    let age = document.getElementById('age').value;
-    let address = document.getElementById('address').value;
-    let mStart = document.getElementById('m_start').value;
-    let mEnd = document.getElementById('m_end').value;
+    let name = document.getElementById('editName').value;
+    let email = document.getElementById("editEmail").value;
+    let age = document.getElementById('editAge').value;
+    let address = document.getElementById('editAddress').value;
+    let mStart = document.getElementById('editM_start').value;
+    let mEnd = document.getElementById('editM_end').value;
 
-    let postData = {
+    let putData = {
         name: name,
         age: age,
         address: address,
         mStart: mStart,
         mEnd: mEnd
     }
-    const postUrl = "http://localhost:3000/api/gymUser/update/" + email;
+    const putUrl = "http://localhost:3000/gymUser/update/" + email;
 
-    fetch(postUrl, {
+    fetch(putUrl, {
         method: 'PUT',
-        body: JSON.stringify(postData),
+        body: JSON.stringify(putData),
         headers: {
             "Content-type": "application/json; charset=UTF-8",
         },
@@ -134,4 +141,61 @@ function updateActiveUser() {
             }
         })
         .then((json) => console.log(json));
+}
+
+
+function addActiveUser() {
+    let startDate=document.getElementById('m_start').value;
+    let endDate=document.getElementById('m_end').value;
+    let dateOfBirth=document.getElementById('dob').value;
+    let epochStartDate = new Date(startDate).getTime();
+    let epochEndDate = new Date(endDate).getTime();
+    let sdob=new Date(dateOfBirth).getTime();
+    let name = document.getElementById('name').value;
+    let email = document.getElementById("email").value;
+    let age = document.getElementById('age').value;
+    let phone = document.getElementById('phone').value;
+    let address = document.getElementById('address').value;
+    let gender = document.getElementById('gender').value;
+    let dob = sdob;
+    let mStart = epochStartDate;
+    let mEnd = epochEndDate;
+
+    let postData = {
+        name: name,
+        age: age,
+        email: email,
+        phone:phone,
+        address: address,
+        gender: gender,
+        dob: dob,
+        membershipStart: mStart,
+        membershipEnd: mEnd,
+        isSubscribed: true,
+    }
+
+    const postUrl = "http://localhost:3000/gymUser/post";
+
+    fetch(postUrl, {
+        method: 'POST',
+        body: JSON.stringify(postData),
+        headers: {
+            "Content-type": "application/json; chartset=UTF-8"
+        }
+    })
+        .then((response) => {
+            if (response.ok) {
+                response.json();
+                // fetchData(apiUrl);
+                $('#exampleAddModal').hide();
+                location.reload()
+            } else {
+                $('#exampleAddModal').hide();
+            }
+        })
+
+        .then((json) => {
+            console.log(json, 'json');
+        })
+
 }
