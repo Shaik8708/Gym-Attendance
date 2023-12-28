@@ -38,6 +38,12 @@
         <div id="myGrid" class="ag-theme-quartz" style="height: 500px"></div>
     </div>
 </body>
+<script>
+    const loggedIn = localStorage.getItem("loggedIn");
+        if (!loggedIn) {
+          window.location.href = "ownerLogin.html";
+        }
+  </script>
 <script src="allUsers.js"></script>
 <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

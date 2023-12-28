@@ -94,6 +94,14 @@
   </div>
     
 </body>
+
+<script>
+  const loggedIn = localStorage.getItem("loggedIn");
+      if (!loggedIn) {
+        window.location.href = "ownerLogin.html";
+      }
+</script>
+
 <script src="updateBtn.js"></script>
 <script src="inactiveUser.js"></script>
 
