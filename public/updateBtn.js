@@ -27,6 +27,6 @@ class UpdateCellRenderer {
     invokeParentModelDialogMethod() {
       const { node } = this.params;
         $('#exampleModal').show();
-        editInactiveForm(node.data);
+        editForm(node.data);
     }
   }

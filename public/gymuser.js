@@ -6,7 +6,7 @@ gymLogin.addEventListener("submit", (event) => {
     event.preventDefault();
 
     var gymmerIdValue = document.getElementById('gymmerId').value;
-    console.log(gymmerIdValue);
+    // console.log(gymmerIdValue);
 
     const apiUrl = `http://localhost:3000/gymUser/${gymmerIdValue}`;
     const postApiUrl = 'http://localhost:3000/history/post';
@@ -19,9 +19,15 @@ gymLogin.addEventListener("submit", (event) => {
         })
         .then(data => {
             if (data.gymmerId) {
-             
+                // console.log(data, 'data');
                 successMessageElement.textContent = 'Successfully submitted';
-                errorMessageElement.textContent = ''; 
+                errorMessageElement.textContent = '';
+                setTimeout(() => {
+                    successMessageElement.textContent = '';
+                    errorMessageElement.textContent = '';
+                    document.getElementById('gymmerId').value = ""
+                    // cache_clear()
+                  }, 2000);
 
                 const postData = {
                     name: data.name,
@@ -35,21 +41,21 @@ gymLogin.addEventListener("submit", (event) => {
                     },
                     body: JSON.stringify(postData),
                 })
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! Status: ${res.status}`);
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    console.log('API response:', data);
-              
-                })
-                .catch(error => {
-                    console.error('Error:', error.message);
-                });
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`HTTP error! Status: ${res.status}`);
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        console.log('API response:', data);
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error.message);
+                    });
             }
-       
+
 
             // Perform any further processing here
         })
@@ -57,5 +63,10 @@ gymLogin.addEventListener("submit", (event) => {
             console.error('Error:', error.message);
             successMessageElement.textContent = '';
             errorMessageElement.textContent = 'Invalid gymmerId';
+            setTimeout(() => {
+                successMessageElement.textContent = '';
+                errorMessageElement.textContent = '';
+                document.getElementById('gymmerId').value = ""
+              }, 2000);
         });
 });
