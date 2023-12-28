@@ -13,23 +13,45 @@
   </head>
   <body class="h-100">
     <div class="container">
-      <div class="header"><h1 class="mt-5">Owner Dashboard</h1></div>
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="header">
+          <h1 class="mt-5">Owner Dashboard</h1>
+        </div>
+        <div class="mt-5">
+          <a href="gymmerLogin.html"><button class="btn btn-secondary">User Login</button></a>
+          <button onclick="logoutOwner()" class="btn btn-danger">Logout</button>
+        </div>
+      </div>
       <div class="row mt-5">
         <div class="col-md-3">
           <button class="btn btn-lg btn-primary">Active Gymmers</button>
         </div>
         <div class="col-md-3">
-          <a href="./inactiveUser.html"><button class="btn btn-lg btn-primary">Inactive Gymmers</button></a>
+          <a href="./inactiveUser.html"
+            ><button class="btn btn-lg btn-primary">Inactive Gymmers</button></a
+          >
         </div>
         <div class="col-md-3">
-          <a href="./allUsers.html"><button class="btn btn-lg btn-primary">All gymmers</button></a>
+          <a href="./allUsers.html"
+            ><button class="btn btn-lg btn-primary">All gymmers</button></a
+          >
         </div>
         <div class="col-md-3">
-          <a href="./gymmerHistory.html"><button class="btn btn-lg btn-primary">Gymmer history</button></a>
+          <a href="./gymmerHistory.html"
+            ><button class="btn btn-lg btn-primary">Gymmer history</button></a
+          >
         </div>
       </div>
     </div>
   </body>
+  <script>
+    const loggedIn = localStorage.getItem("loggedIn");
+    console.log(loggedIn);
+      if (!loggedIn) {
+        window.location.href = "ownerLogin.html";
+      }
+  </script>
+  <script src="./ownerDashboard.js"></script>
   <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Owner Login</title>
     <link
       rel="stylesheet"
@@ -10,28 +10,46 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-</head>
-<body class="h-100">
+  </head>
+  <body class="h-100">
     <div class="container">
-        <div class="row mt-5">
-            <h1 class="col-md-8">Owner Login</h1>
-            <form id="ownerLoginId" class="col-md-6">
-                <div class="form-group">
-                  <label for="ownerEmail">Email address</label>
-                  <input type="email" class="form-control" id="ownerEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label for="ownerPassword">Password</label>
-                  <input type="password" class="form-control" id="ownerPassword" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-        </div>
+      <div class="row mt-5">
+        <h1 class="col-md-8">Owner Login</h1>
+        <div class="col-md-3 m-auto"><a href="gymmerLogin.html"><button class="btn btn-primary">User Login</button></a></div>
+        <form id="ownerLoginId" class="col-md-6">
+          <div class="form-group">
+            <label for="ownerEmail">Email address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="ownerEmail"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="ownerPassword">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="ownerPassword"
+              placeholder="Password"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
     </div>
-    
-</body>
-<script src="ownerLogin.js"></script>
-<script
+  </body>
+  <script>
+    const loggedIn = localStorage.getItem("loggedIn");
+    console.log(loggedIn);
+    if (loggedIn) {
+      window.location.href = "ownerDashboard.html";
+    }
+  </script>
+  <script src="ownerLogin.js"></script>
+  <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"
