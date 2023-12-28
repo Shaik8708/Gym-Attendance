@@ -14,6 +14,8 @@ ownerLogin.addEventListener("submit", (ele) => {
       if(data != null || undefined){
           if(pass == data.password){
             console.log('correct');
+            localStorage.setItem("loggedIn", true)
+            localStorage.setItem('email', email)
             window.location.href = "./ownerDashboard.html";
           }else{
             console.error("wrong password");

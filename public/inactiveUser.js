@@ -19,7 +19,6 @@ fetch("http://localhost:3000/gymUser?status=inactive")
       ele.dob_str = ele.date_to_str_mrthod(ele.dob);
       ele.mstart_str = ele.date_to_str_mrthod(ele.membershipStart);
       ele.mend_str = ele.date_to_str_mrthod(ele.membershipEnd);
-      ele.phone = parseInt(ele.phone);
     });
 
     columnDefs = [
