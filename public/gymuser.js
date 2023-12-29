@@ -10,7 +10,12 @@ gymLogin.addEventListener("submit", (event) => {
 
     const apiUrl = `http://localhost:3000/gymUser/${gymmerIdValue}`;
     const postApiUrl = 'http://localhost:3000/history/post';
-    fetch(apiUrl)
+    fetch(apiUrl, {
+        method: 'GET',
+        headers: new Headers({
+           'Content-Type':'application/json',
+        })
+      })
         .then(res => {
             if (!res.ok) {
                 throw new Error(`HTTP error! Status: ${res.status}`);
@@ -18,7 +23,7 @@ gymLogin.addEventListener("submit", (event) => {
             return res.json();
         })
         .then(data => {
-            if (data.gymmerId) {
+            if (data.gymmerId && data.isSubscribed) {
                 // console.log(data, 'data');
                 successMessageElement.textContent = 'Successfully submitted';
                 errorMessageElement.textContent = '';
@@ -54,6 +59,14 @@ gymLogin.addEventListener("submit", (event) => {
                     .catch(error => {
                         console.error('Error:', error.message);
                     });
+            }else if(!data.isSubscribed){
+                successMessageElement.textContent = '';
+                errorMessageElement.textContent = 'Subscription is expired.';
+                setTimeout(() => {
+                    successMessageElement.textContent = '';
+                    errorMessageElement.textContent = '';
+                    document.getElementById('gymmerId').value = ""
+                }, 2000);
             }
 
 
