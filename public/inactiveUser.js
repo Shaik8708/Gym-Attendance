@@ -2,7 +2,12 @@ let rowData;
 let columnDefs;
 let gridOptions;
 let gridApi;
-fetch("http://localhost:3000/gymUser?status=inactive")
+fetch("http://localhost:3000/gymUser?status=inactive", {
+  method: 'GET',
+  headers: new Headers({
+     'Content-Type':'application/json',
+  })
+})
   .then((response) => response.json())
   .then(async (json) => {
     data = json;
@@ -92,7 +97,12 @@ fetch("http://localhost:3000/gymUser?status=inactive")
 function searchName() {
   let name = document.getElementById("searchInactive").value;
 
-  fetch("http://localhost:3000/gymUser?status=inactive&name=" + name)
+  fetch("http://localhost:3000/gymUser?status=inactive&name=" + name, {
+    method: 'GET',
+    headers: new Headers({
+       'Content-Type':'application/json',
+    })
+  })
     .then((response) => response.json())
     .then((json) => {
       json.forEach((ele) => {

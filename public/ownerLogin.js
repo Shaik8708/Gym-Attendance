@@ -7,7 +7,12 @@ ownerLogin.addEventListener("submit", (ele) => {
   let pass = document.getElementById("ownerPassword").value;
   let data = []; 
 
-  fetch("http://localhost:3000/owner/search/" + email)
+  fetch("http://localhost:3000/owner/search/" + email, {
+    method: 'GET',
+    headers: new Headers({
+       'Content-Type':'application/json',
+    })
+  })
     .then((response) => response.json())
     .then(async (json) => {
       data = json; 
